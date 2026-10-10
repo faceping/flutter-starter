@@ -1,0 +1,21 @@
+name: facecheck
+description: "FaceCheck: enrol your face, then verify it with a live check, with or without a network."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  faceping: 1.0.0-preview.1
+  connectivity_plus: ^7.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
