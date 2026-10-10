@@ -29,8 +29,8 @@ Before you build your own app from this, change the app id `com.example.facechec
 
 | File | What it does |
 |---|---|
-| `lib/main.dart` | Turns FacePing on with your sandbox key (`FacePing.init`), the camera (`FaceCamera`), `enrol` and `verifyLive`, and what each result means. |
-| `pubspec.yaml` | The FacePing dependency (`faceping: 1.0.0-preview.2`). |
+| `lib/main.dart` | Turns FacePing on with your sandbox key (`FacePing.init`), the camera (`FaceCamera`), `enroll` and `verifyLive`, and what each result means. |
+| `pubspec.yaml` | The FacePing dependency (`faceping: 1.0.0-preview.3`). |
 | `ios/Runner/Info.plist` | `NSCameraUsageDescription`, the camera prompt. iOS stops the app without it. |
 | `ios/Runner.xcodeproj` | Minimum iOS version 15.1, which FacePing needs. |
 | `android/app/build.gradle.kts` | The app id, and the two ABIs FacePing runs on. Android needs nothing else: the SDK adds the camera permission. |

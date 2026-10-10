@@ -9,7 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  faceping: 1.0.0-preview.2
+  faceping: 1.0.0-preview.3
   connectivity_plus: ^7.0.0
 
 dev_dependencies:

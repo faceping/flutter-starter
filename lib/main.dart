@@ -74,7 +74,7 @@ class _CheckScreenState extends State<CheckScreen> {
   bool _enrolled = false;
   bool _busy = false;
   bool _offline = false;
-  bool _canEnrol = true;
+  bool _canEnroll = true;
 
   @override
   void initState() {
@@ -101,7 +101,7 @@ class _CheckScreenState extends State<CheckScreen> {
     if (faceping == null) {
       _show('Sandbox key problem',
           widget.setupProblem ?? 'Run with --dart-define=FACEPING_SANDBOX_KEY=fp_test_yourkey.', Palette.red);
-      setState(() => _canEnrol = false);
+      setState(() => _canEnroll = false);
       return;
     }
     try {
@@ -116,11 +116,11 @@ class _CheckScreenState extends State<CheckScreen> {
     await _refreshEnrolled();
   }
 
-  Future<void> _enrol() => _run((faceping) async {
+  Future<void> _enroll() => _run((faceping) async {
         _show('Hold still', 'Taking the photo…', Palette.ink);
         await _camera.setGuideState(FaceGuideState.working);
         final photo = await _camera.capture();
-        final result = await faceping.enrol('me', photo);
+        final result = await faceping.enroll('me', photo);
         await _camera.setGuideState(FaceGuideState.ready);
         if (result.isEnrolled) {
           setState(() => _enrolled = true);
@@ -207,18 +207,18 @@ class _CheckScreenState extends State<CheckScreen> {
         VerifyOutcome.match => 'Match',
       };
 
-  static String _describe(EnrolOutcome outcome) => switch (outcome) {
-        EnrolOutcome.noFace => 'No face seen. Look at the camera.',
-        EnrolOutcome.multipleFaces => 'More than one face. Just you, please.',
-        EnrolOutcome.faceTooSmall => 'Move a little closer.',
-        EnrolOutcome.notLive => 'That looked like a photo or a screen.',
-        EnrolOutcome.limitReached => 'The sandbox is full on this phone.',
-        EnrolOutcome.enrolled => 'Enrolled.',
+  static String _describe(EnrollOutcome outcome) => switch (outcome) {
+        EnrollOutcome.noFace => 'No face seen. Look at the camera.',
+        EnrollOutcome.multipleFaces => 'More than one face. Just you, please.',
+        EnrollOutcome.faceTooSmall => 'Move a little closer.',
+        EnrollOutcome.notLive => 'That looked like a photo or a screen.',
+        EnrollOutcome.limitReached => 'The sandbox is full on this phone.',
+        EnrollOutcome.enrolled => 'Enrolled.',
       };
 
   @override
   Widget build(BuildContext context) {
-    final canEnrol = !_busy && _canEnrol;
+    final canEnroll = !_busy && _canEnroll;
     final canVerify = !_busy && _enrolled;
     return Scaffold(
       body: SafeArea(
@@ -302,9 +302,9 @@ class _CheckScreenState extends State<CheckScreen> {
               ),
               const SizedBox(height: 12),
               Opacity(
-                opacity: canEnrol ? 1 : 0.45,
+                opacity: canEnroll ? 1 : 0.45,
                 child: OutlinedButton(
-                  onPressed: canEnrol ? _enrol : null,
+                  onPressed: canEnroll ? _enroll : null,
                   style: OutlinedButton.styleFrom(
                     minimumSize: const Size.fromHeight(50),
                     foregroundColor: Palette.ink,
