@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "faceping-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/faceping/faceping-ios",
+      "state" : {
+        "revision" : "af9bf17730452465468ba479298bdcfe46db4f2f",
+        "version" : "1.0.0-preview.1"
+      }
+    }
+  ],
+  "version" : 2
+}
