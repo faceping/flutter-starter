@@ -1,7 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- No backup, and no transfer to a new phone: FacePing's face store key lives in this device's Keystore and can't
+         be restored elsewhere. allowBackup="false" covers backups; on Android 12 and later, data_extraction_rules.xml
+         also covers device-to-device transfer (which allowBackup doesn't). -->
     <application
         android:label="FaceCheck"
         android:allowBackup="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

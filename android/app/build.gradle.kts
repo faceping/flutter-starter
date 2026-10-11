@@ -28,8 +28,6 @@ android {
         versionCode = flutter.versionCode
         versionName = flutter.versionName
 
-        // The two ABIs FacePing runs on: 64-bit phones and x86_64 emulators.
-        ndk { abiFilters += listOf("arm64-v8a", "x86_64") }
     }
 
     buildTypes {
