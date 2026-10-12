@@ -3,7 +3,7 @@
          be restored elsewhere. allowBackup="false" covers backups; on Android 12 and later, data_extraction_rules.xml
          also covers device-to-device transfer (which allowBackup doesn't). -->
     <application
-        android:label="FaceCheck"
+        android:label="${appLabel}"
         android:allowBackup="false"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"

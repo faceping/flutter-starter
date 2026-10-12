@@ -1,1 +1,4 @@
 #include "Generated.xcconfig"
+
+// The name under the app's icon. A check-in device build sets FLUTTER_XCODE_FACECHECK_DISPLAY_NAME (see the README).
+FACECHECK_DISPLAY_NAME = FaceCheck

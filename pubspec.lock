@@ -77,10 +77,10 @@ packages:
     dependency: "direct main"
     description:
       name: faceping
-      sha256: "346f569992ca6b29f8952fe222a88c2a9dd7db5cb05cd8ffc4f6534cf3748d34"
+      sha256: e7a68cb07873ed6aa8a018f321117c8986512b0ff78ba946d6a68c7d1fa052ed
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.0-preview.4"
+    version: "1.0.0-preview.5"
   fake_async:
     dependency: transitive
     description:

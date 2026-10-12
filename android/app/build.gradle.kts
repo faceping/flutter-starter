@@ -1,8 +1,17 @@
+import java.util.Base64
+
 plugins {
     id("com.android.application")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
 }
+
+// Check-in device mode (run with --dart-define=FACEPING_DEVICE_TOKEN=fpd_…) gets its own application ID (".device" on
+// the end) and name ("FaceCheck Device"), so it installs next to the sandbox app instead of replacing it. Flutter
+// hands the --dart-define values to Gradle base64-encoded.
+val deviceMode = (findProperty("dart-defines") as String?).orEmpty().split(",").filter { it.isNotBlank() }
+    .map { String(Base64.getDecoder().decode(it)) }
+    .any { it.startsWith("FACEPING_DEVICE_TOKEN=") && it.length > "FACEPING_DEVICE_TOKEN=".length }
 
 android {
     namespace = "com.example.facecheck"
@@ -27,7 +36,8 @@ android {
         // flag during build.
         versionCode = flutter.versionCode
         versionName = flutter.versionName
-
+        if (deviceMode) applicationIdSuffix = ".device"
+        manifestPlaceholders["appLabel"] = if (deviceMode) "FaceCheck Device" else "FaceCheck"
     }
 
     buildTypes {

@@ -19,11 +19,13 @@ You need [Flutter](https://docs.flutter.dev/get-started/install) 3.24 or later, 
 
    A debug build is fine: the FacePing core inside the SDK is already compiled for speed. On iOS, Flutter fetches the FacePing Swift package from GitHub the first time.
 
-   For an APK to install or share, build only the two ABIs FacePing runs on (64-bit phones and x86_64 emulators):
+   For an APK to install or share, build one per ABI, for the two ABIs FacePing runs on:
 
    ```bash
-   flutter build apk --release --target-platform android-arm64,android-x64 --dart-define=FACEPING_SANDBOX_KEY=fp_test_yourkey
+   flutter build apk --release --split-per-abi --target-platform android-arm64,android-x64 --dart-define=FACEPING_SANDBOX_KEY=fp_test_yourkey
    ```
+
+   Install `build/app/outputs/flutter-apk/app-arm64-v8a-release.apk` (about 48 MB) on a phone; `app-x86_64-release.apk` is for emulators. Without `--split-per-abi` you get one APK for both, about twice the size.
 
 4. Tap **Enrol my face**, then **Verify**, and turn your head when asked: you should see **Match**. Now switch on airplane mode and tap **Verify** again.
 
@@ -42,7 +44,14 @@ Once you've tried the server side with your sandbox key (a practice check-in lis
    flutter run --release --dart-define=FACEPING_DEVICE_TOKEN=fpd_yourtoken --dart-define=FACEPING_PERSON_ID=ACME-000123
    ```
 
-   With a device token, the sandbox key is ignored. To keep the sandbox app on the phone as well, also give this build a different app id.
+   With a device token, the sandbox key is ignored. On Android, the build gets its own app id (`com.example.facecheck.flutter.device`) and name (**FaceCheck Device**), so it installs next to the sandbox app instead of replacing it. On an iPhone, do the same by adding two settings in front of the command (the bundle id must be one your team can sign):
+
+   ```bash
+   FLUTTER_XCODE_PRODUCT_BUNDLE_IDENTIFIER=com.yourcompany.facecheck.device FLUTTER_XCODE_FACECHECK_DISPLAY_NAME="FaceCheck Device" \
+     flutter run --release --dart-define=FACEPING_DEVICE_TOKEN=fpd_yourtoken --dart-define=FACEPING_PERSON_ID=ACME-000123
+   ```
+
+   Without them, the device build replaces the sandbox app on the iPhone.
 3. The app downloads the list, hides **Enrol my face** (a check-in device gets its people from the server) and opens **Verify** once that person is on the phone. After each sync it says what it found: how many people, or that the token isn't valid, the list has finished, or it couldn't connect.
 
 See [Devices and offline sync](https://docs.faceping.ai/devices/).
@@ -52,10 +61,11 @@ See [Devices and offline sync](https://docs.faceping.ai/devices/).
 | File | What it does |
 |---|---|
 | `lib/main.dart` | Turns FacePing on with your sandbox key or a device token (`FacePing.init`), the camera (`FaceCamera`), `enroll`, `verifyLive` and `sync`, and what each result means. |
-| `pubspec.yaml` | The FacePing dependency (`faceping: 1.0.0-preview.3`). |
+| `pubspec.yaml` | The FacePing dependency (`faceping: 1.0.0-preview.5`). |
 | `ios/Runner/Info.plist` | `NSCameraUsageDescription`, the camera prompt. iOS stops the app without it. |
-| `ios/Runner.xcodeproj` | Minimum iOS version 15.1, which FacePing needs. |
-| `android/app/build.gradle.kts` | The app id. Android needs nothing else: the SDK adds the camera permission. |
+| `ios/Runner.xcodeproj` | Minimum iOS version 15.1, which FacePing needs, and the bundle id. |
+| `ios/Flutter/Debug.xcconfig`, `Release.xcconfig` | The app's name on the iPhone (`FACECHECK_DISPLAY_NAME`). |
+| `android/app/build.gradle.kts` | The app id, with `.device` added for a check-in device build. Android needs nothing else: the SDK adds the camera permission. |
 | `android/app/src/main/res/xml/data_extraction_rules.xml`, `backup_rules.xml` | Keep FacePing's face store (`files/faceping/`) and its wrapped key (`faceping.keys.xml`) out of backups and transfers to a new phone: the key can't work on another device. |
 
 Flutter uses Swift Package Manager for iOS plugins by default. If you've turned it off, CocoaPods works too: `pod install` downloads the same FacePing framework and checks its SHA-256 (set `platform :ios, '15.1'` in the generated `ios/Podfile`).
