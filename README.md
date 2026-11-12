@@ -56,12 +56,14 @@ Once you've tried the server side with your sandbox key (a practice check-in lis
 
 See [Devices and offline sync](https://docs.faceping.ai/devices/).
 
+If your server needs proof that a check really happened, see [Signed check results](https://docs.faceping.ai/signed-results/).
+
 ## What's where
 
 | File | What it does |
 |---|---|
 | `lib/main.dart` | Turns FacePing on with your sandbox key or a device token (`FacePing.init`), the camera (`FaceCamera`), `enroll`, `verifyLive` and `sync`, and what each result means. |
-| `pubspec.yaml` | The FacePing dependency (`faceping: 1.0.0-preview.5`). |
+| `pubspec.yaml` | The FacePing dependency (`faceping: 1.0.0-preview.6`). |
 | `ios/Runner/Info.plist` | `NSCameraUsageDescription`, the camera prompt. iOS stops the app without it. |
 | `ios/Runner.xcodeproj` | Minimum iOS version 15.1, which FacePing needs, and the bundle id. |
 | `ios/Flutter/Debug.xcconfig`, `Release.xcconfig` | The app's name on the iPhone (`FACECHECK_DISPLAY_NAME`). |
